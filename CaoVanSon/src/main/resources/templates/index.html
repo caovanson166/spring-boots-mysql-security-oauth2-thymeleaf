@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      
+        <!-- Font online-->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+        <link rel="mask-icon" type="" href="https://cpwebassets.codepen.io/
+        assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111">                                        
+        
+        <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css}">
+        <link rel="stylesheet" th:href="@{/css/index.css}" >
+        <!-- Google JQuery CDN -->
+        <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js}"></script>
+        
+
+    </head>
+    <body>
+    <a th:href="@{/oauth2/authorization/google}">Login with Google</a>
+       <p th:if="${param.error}" class="error">Invalid email or password</p>
+        <p th:if="${param.logout}" class="success">You have been logged out</p>
+        <p th:if="${param.son}" class="success">Đăng ký thành công</p>
+<div class="container">
+   <section id="formHolder">
+
+      <div class="row">
+
+         <!-- Brand Box -->
+         <div class="col-sm-6 brand">
+            <a href="#" class="logo">CV<span>.</span></a>
+
+            <div class="heading">
+               <h2>CAO VAN SON</h2>
+               <p>test 1023 ....</p>
+            </div>
+
+            <div class="success-msg">
+               <p>Great! You are one of our members now</p>
+               <a href="#" class="profile">Your Profile</a>
+            </div>
+         </div>
+
+
+         <!-- Form Box -->
+         <div class="col-sm-6 form">
+
+            <!-- Login Form -->
+            <div class="login form-peice switched">
+            
+            
+               <form class="login-form" th:action="@{/j_spring_security_login}" th:object="${user}" method="post">
+                  <div class="form-group">
+                     <label for="loginemail">Email Adderss</label>
+                     <input type="email" th:field="*{email}" required>
+                  </div>
+
+                  <div class="form-group">
+                     <label for="loginPassword">Password</label>
+                     <input type="password" th:field="*{password}" required>
+                  </div>
+
+                  <div class="CTA">
+                     <input type="submit" value="Login">
+                     <a href="#" class="switch">Tạo acc</a>
+                     <a th:href="@{/forgot_password}">Forgot your password?</a>
+                  </div>
+                  	
+				
+               </form>
+               
+               
+            </div><!-- End Login Form -->
+
+
+            <!-- Signup Form -->
+            <div class="signup form-peice">
+            
+            
+               <form class="signup-form" th:action="@{/User/save}" th:object="${user}"
+               method="post">  
+
+                  <div class="form-group">
+                     <label for="email">Email Adderss</label>
+                     <input type="email" th:field="*{email}" required />
+                     <span class="error"></span>
+                  </div>
+                  <div class="form-group">
+                     <label for="name">Full Name</label>
+                     <input type="text" th:field="*{name}" required />
+                     <span class="error"></span>
+                  </div>
+
+                  <div class="form-group">
+                     <label for="password">Password</label>
+                     <input type="password" th:field="*{password}" required />
+                     <span class="error"></span>
+                  </div>
+                  
+                  <div class="form-group">
+                     <label >Address</label>
+                     <select th:field="*{address}"  required>
+						<th:block th:each="ad:${ad}">
+							<option th:value="${ad.id}">
+							[[${ad.city}]] - [[${ad.province}]]
+							</option>
+						</th:block>
+					</select>
+                  </div>
+
+                  
+                  <div class="CTA">
+                     <input type="submit" value="Tạo Tài Khoản" id="submit" />
+                     
+                     <a href="#" class="switch">Đăng nhập</a>
+                  </div>
+               </form>
+               
+               
+            </div><!-- End Signup Form -->
+         </div>
+      </div>
+
+   </section>
+
+
+   <footer>
+      <p>
+         Form made by: <a href="http://mohmdhasan.tk" target="_blank">CAOVANSON-DZ</a>
+      </p>
+   </footer>
+
+</div>
+
+	<script type="text/javascript">
+	$(document).ready(function() {
+		
+		$("#login-btn").click(login);
+		
+	});
+	
+	
+	function login() {
+
+	    console.info("son");
+
+	    $.ajax({
+	        type: 'POST',
+	        url: '/User/save',
+	        data: $('#submit').serialize(),
+	        cache: false,
+	        dataType: "json",
+	        crossDomain: false,
+	        success: function (data) {
+	            var response = jQuery.parseJSON(data);
+	            if (response.success == true) {
+	                console.info("Authentication Success!");
+	                window.location.href("/");
+	            }
+	            else {
+	                console.error("Unable to login");
+	            }
+	        },
+	        error: function (data) {
+	            console.error("Login failure");
+	        }
+	    });
+	}
+	</script>
+	<script th:src="@{/css/index.js}"></script>
+    </body>
+</html>

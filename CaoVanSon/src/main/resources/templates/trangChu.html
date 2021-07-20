@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+>
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/trangchhu.css}">
+<!-- <link rel="stylesheet" type="text/css" href="trangchu.css"> -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+<div class="main">
+	<div class="img">
+		<img src="https://th.bing.com/th/id/R853c53bebce9a54352cad13b43df2360?rik=vIDdgwatH6LurA&pid=ImgRaw">
+		<img src="https://th.bing.com/th/id/R05469f77c6de78132025eb260caea9fa?rik=HJatateqhA6UMw&pid=ImgRaw">
+	</div>
+	<form th:action="@{/logout}" method="post" class="submit">
+		<div class="su1">
+			<p>
+		        Email : <b>[[${#request.userPrincipal.principal.email}]]</b>
+		    </p>
+		    <p>
+		        Welcome : <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+		    </p>
+		</div>
+            <input type="submit" value="Sign Out"  />
+    </form>
+</div>               
+<div class="a">
+	<div class="color"></div>
+	<div class="a1">
+		<div class="sale">Khuyến Mãi Hot</div>
+		<div class="a2">
+			<div class="a22" th:each="i:${list}">
+				<a href="">
+					<img class="anh" th:src="${i.NhaCungCap}">
+				</a>
+				<div class="infor">
+					<p>Trả Góp [[${i.traGop}]]</p>
+					<p>Giảm Giá [[${i.giamGia}]]</p>
+				</div>
+				<div class="name" th:id="${i.brand}" th:utext="${i.name}"></div>
+				<div class="price">
+					<span class="price-1">
+						[[${i.price}]]<span>₫</span>
+					</span>
+					<span class="price-2">
+						..............
+						<span>₫</span>
+						<div class="time" th:text="${i.timeSale}"></div>
+					</span>
+				</div>
+				<div class="km">
+					<div>
+						sản phẩm tặng kèm
+					</div>
+					<div class="km0">
+						<div class="km1" th:each="km : ${i.tangKem}">
+							<img th:src="${km.name}">
+						</div>
+					</div>
+				</div>			
+			</div>
+						
+		</div>
+	</div>
+
+
+	<div class="aa1">
+		<div class="sale">Khuyến Mãi Hot</div>
+		<div class="a2">
+			<div class="a22" th:each="l:${Laptop}">
+				<a href="">
+					<img class="anh" th:src="${l.NhaCungCap}">
+				</a>
+				<div class="infor">
+					<p>Trả Góp [[${l.traGop}]]</p>
+					<p>Giảm Giá [[${l.giamGia}]]</p>
+				</div>
+				<div class="name" th:id="${l.brand}">[[${l.name}]]</div>
+				<div class="price">
+					<span class="price-1">
+						[[${l.price}]]<span>₫</span>
+					</span>
+					<span class="price-2">
+						..............
+						<span>₫</span>
+						<div class="time" th:text="${l.timeSale}"></div>
+					</span>
+				</div>
+				<div class="km">
+					<div>
+						sản phẩm tặng kèm
+					</div>
+					<div class="km0">
+						<div class="km1" th:each="l1 : ${l.tangKem}">
+							<img th:src="${l1.name}">
+						</div>
+					</div>
+				</div>			
+			</div>
+						
+		</div>
+	</div>
+
+	<div class="end"></div>
+</div>       
+	
+</body>
+</html>
